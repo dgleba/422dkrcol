@@ -1,0 +1,21 @@
+{
+    "couch" : {
+        "host" : "pmdsdata4",
+        "port" : "5984",
+        "database" : "opennote"
+    },
+
+    "mySQL" : {
+        "host" : "pmdsdata4",
+        "port" : "6112",
+        "user" : "root",
+        "password" : "root",
+        "database" : "opennote_cp"
+    },
+
+    "queries" : {
+        "insert" : "insert into opennote set ?",
+        "update" : "",
+        "delete" : "delete from post where id = ?"
+    }
+}
