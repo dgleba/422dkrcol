@@ -1,4 +1,6 @@
-# garron
+# garron  - https://www.garron.me/en/linux/nginx-reverse-proxy.html
+# https://raymii.org/s/tutorials/NGINX_proxy_folder_to_different_root.html
+
 
 # works:
 # http://192.168.88.42:4180/a
