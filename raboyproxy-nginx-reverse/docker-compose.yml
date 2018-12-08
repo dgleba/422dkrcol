@@ -1,21 +1,32 @@
 # https://www.thepolyglotdeveloper.com/2017/03/nginx-reverse-proxy-containerized-docker-applications/
 
+# works:
+# http://192.168.88.42:82/n/
+# http://david462.tk:46272/n/
+#  sometimes first time goes to http://david462.tk/n/ [strips off port]  Error 404: Not Found
+  # but second time works ok.
+
+# works.
+# http://david462.tk:46272/a/
+
+
 
 version: '3.6'
 services:
 
-    reverseproxy:
-        image: nginx:alpine
-        ports:
-            - 8080:8080
-            - 8081:8081
-        restart: always
-        volumes:
-          - ./upstream.conf:/etc/nginx/nginx.conf
-        # needed to avoid error - [emerg] 1#1: host not found in upstream "nginx:80" in /etc/nginx/nginx.conf:12
-        depends_on: 
-            - nginx
-            - apache
+    # Works.
+    # reverseproxy:
+        # image: nginx:1.14-alpine
+        # ports:
+            # - 8080:8080
+            # - 8081:8081
+        # restart: always
+        # volumes:
+          # - ./upstream.conf:/etc/nginx/nginx.conf
+        # # needed to avoid error - [emerg] 1#1: host not found in upstream "nginx:80" in /etc/nginx/nginx.conf:12
+        # depends_on: 
+            # - nginx
+            # - apache
 
             
     # error  reverseproxy1port_1  | 2018/12/07 17:20:56 [warn] 1#1: conflicting server name "" on 0.0.0.0:3081, ignored 
@@ -23,7 +34,7 @@ services:
     #  http://192.168.88.42:3081/a/ works.
     #
     reverseproxy1port:
-        image: nginx:alpine
+        image: nginx:1.14-alpine
         ports:
             - 3081:3081
         restart: always
@@ -39,7 +50,7 @@ services:
     nginx:
         # depends_on:
             # - reverseproxy
-        image: nginx:alpine
+        image: nginx:1.14-alpine
         restart: always
         volumes:
              - ./nindex.html:/usr/share/nginx/html/n/index.html
