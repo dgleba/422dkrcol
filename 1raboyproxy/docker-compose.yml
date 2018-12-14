@@ -1,0 +1,31 @@
+# https://www.thepolyglotdeveloper.com/2017/03/nginx-reverse-proxy-containerized-docker-applications/
+
+version: '3.6'
+services:
+  reverseproxy1port:
+    image: nginx:alpine
+    ports:
+     - 8081:8081
+    restart: always
+    volumes:
+     - ./oneport.conf:/etc/nginx/nginx.conf
+    depends_on: 
+     - nginx
+     - apache
+
+    nginx:
+        # depends_on:
+            # - reverseproxy
+        image: nginx:alpine
+        restart: always
+        volumes:
+            - ./nindex.html:/usr/share/nginx/html/n/index.html
+
+    apache:
+        # depends_on:
+            # - reverseproxy
+        image: httpd:alpine
+        restart: always
+        volumes:
+             - ./aindex.html:/var/www/html/a/index.html
+        
