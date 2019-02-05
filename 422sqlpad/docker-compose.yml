@@ -1,0 +1,16 @@
+version: '3.6'
+services:
+
+  sqlpad:
+    image: sqlpad/sqlpad
+    #container_name: mysqldbm
+    # build: .
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "3100:3000"
+    volumes:
+      - ../datasys/sqlpad422v/:/var/lib/sqlpad   # folder for mysql's internal data files.
+    #   - .:/root                                   # folder for scripts, etc.
+    #   - ../data/data392dbm/:/home  
