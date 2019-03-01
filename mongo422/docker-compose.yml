@@ -1,0 +1,80 @@
+
+version: '3.6'
+services: 
+
+  mongo422:
+    image: mongo:3.6
+    #container_name: mongo392
+    restart: always
+    ports:
+      - 27017:27017
+    env_file:
+      - .env
+    volumes:
+      - ../datasys/mongo422/:/data/db   # folder for db's internal data files.
+    # networks:
+    #   - sister 
+
+
+#  Used robo 3t for windows portable x64 to help figure out how to connect
+#  10.4.1.227:27109 admin db for user auth, root:pw, 	SCRAM_SHA_1
+
+  # nosqlclent mongoclient works.
+  noclient:
+    image: mongoclient/mongoclient
+    ports:
+      - 8094:3000
+    env_file:
+      - .env 
+    # networks:
+    #   - sister 
+
+
+  # I couldnot get this to work.
+  # mongo-express:
+  #   image: mongo-express
+  #   restart: always
+  #   ports:
+  #     - 8091:8081
+  #   networks:
+  #     - sister 
+  #   env_file:
+  #     - .env
+
+      
+  # rockmongo:
+  #   image: weshigbee/rockmongo
+  #   ports:
+  #     - 8093:8080
+  #   env_file:
+  #     - .env 
+  #   networks:
+  #     - sister 
+
+
+
+
+  # admr-mongo392:
+  #     image: 'dockette/adminer:full-php5'
+  #     # image: 'dockette/adminer:full'
+  #     # image: 'dockette/adminer:dg'
+  #     restart: always
+  #     ports:
+  #       - '8090:80'
+  #     networks:
+  #       - sister                 
+
+  admin-mongo:
+    image: mrvautin/adminmongo
+    ports:
+      - "8092:1234"
+    env_file:
+      - .env      
+  #   networks:
+  #     - sister 
+
+# networks:
+#   sister:
+#     name: sister
+#       external:true
+     
