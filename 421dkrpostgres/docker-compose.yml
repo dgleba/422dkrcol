@@ -1,0 +1,41 @@
+# Use postgres/example user/password credentials
+version: '3.6'
+services:
+
+  postgres:
+    # https://hub.docker.com/_/postgres/
+    image: postgres:11
+    restart: always
+    #command: postgres -c listen_addresses = '*'
+    environment:
+        POSTGRES_PASSWORD: pg
+        CONFIGS: "listen_addresses:'*'"
+        # https://github.com/syndbg/postgres-docker-cluster/blob/master/docker-compose.yml
+                              # in format variable1:value1[,variable2:value2[,...]]
+                              # used for pgpool.conf file
+    ports:
+        - 5433:5432                          
+    volumes:
+      - ../data/postgres421/:/var/lib/postgresql/data/   # folder for mysql's internal data files.
+      - .:/root                                               # folder for scripts, etc.
+      - ../data/data421/:/home                           # folder for exported data, etc.
+    networks:
+      - sister
+      
+
+  adminerpg:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    # networks:
+      # - sister
+    
+      
+# https://docs.docker.com/compose/compose-file/#external-1   
+networks:
+  
+  sister:
+    name: sister
+      external:true
+

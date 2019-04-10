@@ -1,0 +1,29 @@
+version: '3.6'
+
+  # http://a.davidg.ml:46272
+  # http://c.davidg.ml:46272/_utils/
+  # http://couch429c.david462.tk:46272/_utils/
+  
+networks:
+  sister:
+    name: sister
+      external:true      
+
+services:
+
+  couchdb:
+    image: couchdb
+    volumes:
+          # - ../data/home422couch/:/home                  # folder for exported data, etc.
+          - ../datasys/couch422a/:/opt/couchdb/data      #TODO set this
+          - ./docker/couchdb/:/opt/couchdb/etc/local.d             
+    ports:
+        - "5984:5984" # no ssl
+    env_file:
+      - .env      
+    restart: always
+    # networks:
+    #   - sister
+
+
+    

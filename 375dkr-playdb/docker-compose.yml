@@ -1,0 +1,36 @@
+version: '3.6'
+services: 
+  adminer375:
+      image: 'dockette/adminer:full-php5'
+      # image: 'dockette/adminer:full'
+      # image: 'dockette/adminer:dg'
+      restart: always
+      ports:
+          - '8090:80'
+  # postgres375:
+      # image: 'postgres:10'
+      # restart: always
+      # ports:
+          # - '5439:5432'
+      # environment:
+          # POSTGRES_USER: root
+          # POSTGRES_PASSWORD: a
+          # POSTGRES_DB: mydb
+  # my375:
+      # image: 'mysql:5.7'
+      # restart: always
+      # ports:
+          # - '3307:3306'
+      # volumes:
+          # - ./data/my375:$HOME/playdb375
+      # environment:
+          # MYSQL_ROOT_PASSWORD: a
+          # MYSQL_DATABASE: mydb
+  mongo375:
+      image: 'mongo:3.6'
+      restart: always
+      ports:
+          - '27019:27017'
+      environment:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: a

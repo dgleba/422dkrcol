@@ -1,0 +1,49 @@
+version: '3'
+services:
+  redis397:
+    image: redis:3.2
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - redis397:/data
+  postgres397:
+    image: postgres:10
+    restart: always
+    environment:
+      POSTGRES_DB: superset
+      POSTGRES_PASSWORD: superset
+      POSTGRES_USER: superset
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres397:/var/lib/postgresql/data
+  superset397:
+    build: .
+    # image: apache/incubator-superset
+    restart: always
+    environment:
+      POSTGRES_DB: superset
+      POSTGRES_USER: superset
+      POSTGRES_PASSWORD: superset
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      SUPERSET_ENV: local
+    ports:
+      - 3099:8088
+    command: "tail -f /dev/null"
+    depends_on:
+      - postgres397
+      - redis397
+    volumes:
+      - .:/home/work/incubator-superset
+      - superset-node-modules397:/home/work/incubator-superset/superset/assets/node_modules
+volumes:
+  postgres397:
+    external: false
+  redis397:
+    external: false
+  superset-node-modules397:
+    external: false

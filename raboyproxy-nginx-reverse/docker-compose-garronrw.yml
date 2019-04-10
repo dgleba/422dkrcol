@@ -1,0 +1,51 @@
+# garron  - https://www.garron.me/en/linux/nginx-reverse-proxy.html
+# https://raymii.org/s/tutorials/NGINX_proxy_folder_to_different_root.html
+
+
+# works:
+# http://192.168.88.42:4180/a
+# http://192.168.88.42:3091/n
+# http://192.168.88.42:82/n/
+# http://david462.tk:46272/n/
+# http://david462.tk:46272/a/
+#  sometimes first time goes to http://david462.tk/n/ [strips off port]  Error 404: Not Found
+  # but second time works ok.
+
+# works.
+# http://david462.tk:46272/a/
+
+
+version: '3.6'
+services:
+            
+    # error  reverseproxy1port_1  | 2018/12/07 17:20:56 [warn] 1#1: conflicting server name "" on 0.0.0.0:3081, ignored 
+    #  fixed by using one server block in nginx.conf
+    #  http://192.168.88.42:3081/a/ works.
+    #
+    reverseproxy1portgrw:
+        image: nginx:1.14-alpine
+        ports:
+            # - 4180:4181
+            - 82:4181
+        restart: always
+        volumes:
+          - ./garronrw.conf:/etc/nginx/nginx.conf
+        #
+        # needed to avoid error - [emerg] 1#1: host not found in upstream "nginx:80" in /etc/nginx/nginx.conf:12
+        depends_on: 
+            - nginx
+            - apache
+
+    nginx:
+        image: nginx:1.14-alpine
+        restart: always
+        volumes:
+             # - ./nindex.html:/usr/share/nginx/html/n/index.html
+             - ./nindex.html:/usr/share/nginx/html/index.html
+
+    apache:
+        image: php:7.2-apache
+        restart: always
+        volumes:
+             - ./aindex.html:/var/www/html/index.html
+        

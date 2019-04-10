@@ -1,0 +1,287 @@
+
+----------------------------------------------------
+Title:  .
+-----------------------2018-12-20[Dec-Thu]12-32PM
+
+docker-compose up --build adminer375 mongo375
+
+
+docker-compose up --build --force-recreate 
+
+----------------------------------------------------
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-07[Jun-Thu]22-24PM
+
+
+mkdir -p /srv/web/playdb375
+cd  /srv/web/playdb375
+
+sudo docker-compose -f playdb375.yml up
+
+
+
+access mysql from adminer outside the container -on the host.
+works..
+http://192.168.88.55/adminerm/adminer-mobile/?server=192.168.88.55%3A3307&username=root
+
+
+_____________
+
+
+error from inside container
+
+
+Login
+Server sent charset unknown to the client. Please, report to the developers
+System	
+Server	
+192.168.88.55:3307
+Username	
+root
+Password	
+Database	
+ Permanent login
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-07[Jun-Thu]22-24PM
+
+https://medium.com/@etiennerouzeaud/play-databases-with-adminer-and-docker-53dc7789f35f
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+About membership
+Homepage
+Go to the profile of Etienne Rouzeaud
+Etienne Rouzeaud
+A curious guy
+Feb 14
+Play databases with Adminer and Docker
+When you use Docker with a database you need a client to operate on it. A simple and clean solution is to install a client in a Docker container. With that, no need to install anything on your computer besides Docker. Many clients exists, like PHPMyAdmin, but we want one that can connect to different database, not just MySQL/MariaDB.
+Adminer seems a good choice.
+
+The prerequisites for this article is to have Docker and Docker Compose installed.
+
+$ docker version && docker-compose version
+Versions used in this article :
+
+Docker : 17.12.0-ce ;
+Docker Compose : 1.17.0 ;
+Adminer : 4.5.0 ;
+Postgres : 10 ;
+MySQL : 8.0.3 ;
+MongoDB : 3.6.2
+Install Adminer
+Create a file “docker-compose.yml” in your project directory.
+
+version: '3.1'
+   services:
+       adminer:
+           image: dockette/adminer:full-php5
+           restart: always
+           ports:
+              - 8080:8080
+              
+              
+Some explanations :
+
+“dockette/adminer:full-php5” is an unofficial image working with PHP 5 instead of PHP 7 ;
+“restart” the container will be restart each time when the Docker service will be up ;
+“8080” on the left side is the external port. If this port is already using you should change it ;
+“8080” on the right side is the internal port. Please don’t change !
+Why don’t we use the official Adminer image ? You can use it, but it will not works with Mongo and PHP7.
+
+> https://hub.docker.com/_/adminer
+The following drivers are not supported by this image:
+MongoDB (The driver is not supported by PHP 7)
+You can run this container with the command
+
+$ docker-compose up
+(make sure your are in the same root of the “docker-compose.yml”). If the container is up, you can connect to http://localhost:8080.
+
+
+Working but we don’t have database server yet.
+
+
+Postgres
+Prepare the server
+In the same file (in the “services” column).
+
+dbPostgres:
+    image: postgres:10
+    restart: always
+    ports:
+        - 5432:5432
+    environment:
+        POSTGRES_USER: root
+        POSTGRES_PASSWORD: changeme
+        POSTGRES_DB: mydb
+        
+        
+        
+Some explanations :
+
+“postgres:10” is the official image of the 10 version ;
+“restart: always” means restart the service each time the Docker daemon is restarted ;
+“5432” (on the left side) is the external port. If this port is already using you should change it ;
+“5432” (on the right side) is the internal port. Please don’t change it!
+“POSTGRES_USER” is the login ;
+“POSTGRES_PASSWORD” is the password ;
+“POSTGRES_DB” is the name of the database.
+If the Adminer container is still running, stop it with CTRL-C and then run
+
+$ docker-compose up
+Connection with Adminer and Postgres
+Go back in Adminer (http://localhost:8080). Then complete the form :
+
+“System” : select “PostgresSQL” ;
+“Server” : type “dbPostgres” ;
+“Username” : type “root” ;
+“Password” : type “changeme” ;
+“Database” : type “mydb” ;
+Click “login” button.
+MySQL
+Prepare the server
+In the same file (in the “services” column).
+
+dbMysql:
+    image: mysql:8.0.3
+    restart: always
+    environment:
+        MYSQL_ROOT_PASSWORD: changeme
+        MYSQL_DATABASE: mydb
+        
+        
+Some explanations :
+
+“mysql:8.0.3” is the official image of the 8.0.3 version (or “mariadb” in you want to use MariaDB) ;
+“restart: always” means restart the service each time the Docker daemon is restarted ;
+“3306” (on the left side) is the external port. If this port is already using you should change it ;
+“3306” (on the right side) is the internal port. Please don’t change it!
+“MYSQL_ROOT_PASSWORD” is the password ;
+“MYSQL_DATABASE” is the name of the database.
+With MySQL you can choose a simple user with `MYSQL_USER` and`MYSQL_PASSWORD`.
+
+If the Adminer container is still running, stop it with CTRL-C and then run
+
+$ docker-compose up
+Connection with Adminer and MySQL
+Go back in Adminer (http://localhost:8080). Then complete the form :
+
+“System” : select “MySQL” ;
+“Server” : type “dbMysql” ;
+“Username” : type “root” ;
+“Password” : type “changeme” ;
+“Database” : type “mydb” ;
+Click “login” button.
+MongoDB
+In the same file (in the “services” column).
+
+dbMongo:
+    image: mongo:3.6.2
+    restart: always
+    ports:
+        - 27017:27017
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: changeme
+        
+        
+Some explanations :
+
+“mongo:3.6.2” is the official image of the 3.6.2 version ;
+“restart: always” means restart the service each time the Docker daemon is restarted ;
+“27017” (on the left side) is the external port. If this port is already using you should change it ;
+“27017” (on the right side) is the internal port. Please don’t change it!
+“MONGO_INITDB_ROOT_USERNAME” : is the login ;
+“MONGO_INITDB_ROOT_PASSWORD” is the password root.
+If the Adminer container is still running, stop it with CTRL-C and then run
+
+$ docker-compose up
+Connection with Adminer and MongoDB
+Go back in Adminer (http://localhost:8080). Then complete the form :
+
+“System” : select “Mongo” ;
+“Server” : type “dbMongo” ;
+“Username” : type “root” ;
+“Password” : type “changeme” ;
+“Database” : leave empty ;
+Click “login” button.
+Global file
+
+
+version: '3.1'
+    services:
+        adminer:
+            image: dockette/adminer:full-php5
+            restart: always
+            ports:
+                - 8080:80
+        dbPostgres:
+            image: postgres:10
+            restart: always
+            ports:
+                - 5432:5432
+            environment:
+                POSTGRES_USER: root
+                POSTGRES_PASSWORD: changeme
+                POSTGRES_DB: mydb
+        dbMysql:
+            image: mysql:8.0.3
+            restart: always
+            ports:
+                - 3306:3306
+            environment:
+                MYSQL_ROOT_PASSWORD: changeme
+                MYSQL_DATABASE: mydb
+        dbMongo:
+            image: mongo:3.6.2
+            restart: always
+            ports:
+                - 27017:27017
+            environment:
+                MONGO_INITDB_ROOT_USERNAME: root
+                MONGO_INITDB_ROOT_PASSWORD: changeme
+                
+                
+Sources
+Official Adminer website : https://www.adminer.org
+Adminer demo : https://adminer.sourceforge.io/editor.php
+Official Adminer image : https://hub.docker.com/_/adminer
+Unofficial Adminer image : https://hub.docker.com/r/dockette/adminer
+Official Postgres image : https://hub.docker.com/_/postgres
+Official MySQL image : https://hub.docker.com/_/mysql
+Official MariaDB image : https://hub.docker.com/_/mariadb
+Official MongoDB image : https://hub.docker.com/_/mongo
+
+
+DockerDocker ComposeDatabase
+Like what you read? Give Etienne Rouzeaud a round of applause.
+From a quick cheer to a standing ovation, clap to show how much you enjoyed this story.
+
+Go to the profile of Etienne Rouzeaud
+Etienne Rouzeaud
+A curious guy
+
+Also tagged Database
+Data Science for Startups: Data Pipelines
+Go to the profile of Ben Weber
+Ben Weber
+Also tagged Docker
+Advanced multi-stage build patterns
+Go to the profile of Tõnis Tiigi
+Tõnis Tiigi
+Also tagged Docker
+Node.js Docker workflow
+Go to the profile of Guillaume Jacquart
+Guillaume Jacquart
+Responses
+Go to the profile of Etienne Rouzeaud
+Never miss a story from Etienne Rouzeaud, when you sign up for Medium. Learn more
