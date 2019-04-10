@@ -1,3 +1,4 @@
 datasys/
 .env
+.env.*
 certs/
