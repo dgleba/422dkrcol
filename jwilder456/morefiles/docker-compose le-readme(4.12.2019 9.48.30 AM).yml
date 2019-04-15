@@ -1,0 +1,63 @@
+version: "3.6"
+
+networks:
+  sister:
+    name: sister
+      external:true
+
+
+  # nginx:
+  #   image: nginx:1.14-alpine
+  #   restart: always
+  #   ports:
+  #     - 6314:80
+  #   volumes:
+  #     - ./nindex.html:/usr/share/nginx/html/index.html
+  # apache:
+  #   image: php:7.2-apache
+  #   restart: always
+  #   ports:
+  #     - 6316:80
+  #   volumes:
+  #     - ./aindex.html:/var/www/html/index.html
+
+
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    restart: always
+    #container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    network_mode: bridge
+    networks:
+      - sister
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+    #container_name: nginx-proxy-le
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    network_mode: bridge
+    networks:
+      - sister
+      
+volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:

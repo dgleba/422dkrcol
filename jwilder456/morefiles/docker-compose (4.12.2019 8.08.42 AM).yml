@@ -1,0 +1,39 @@
+version: "3.6"
+
+networks:
+  sister:
+    name: sister
+      external:true
+
+services:
+  reverseproxy:
+    image: nginx:1.14-alpine
+    ports:
+      # - 4180:4181
+      - 80:80
+      - 443:443
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      #
+      # rsync -aK --delete /etc/letsencrypt/ /srv/422dkrcol/revprox453d/certs/
+      - ./certs:/etc/letsencrypt
+    # needed to avoid error - [emerg] 1#1: host not found in upstream "nginx:80" in /etc/nginx/nginx.conf:12
+    # depends_on:
+    #   - nginx
+    #   - apache
+  # nginx:
+  #   image: nginx:1.14-alpine
+  #   restart: always
+  #   ports:
+  #     - 6314:80
+  #   volumes:
+  #     - ./nindex.html:/usr/share/nginx/html/index.html
+  # apache:
+  #   image: php:7.2-apache
+  #   restart: always
+  #   ports:
+  #     - 6316:80
+  #   volumes:
+  #     - ./aindex.html:/var/www/html/index.html

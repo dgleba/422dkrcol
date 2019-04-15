@@ -1,0 +1,107 @@
+version: "3.6"
+
+networks:
+  sister:
+    name: sister
+      external:true
+
+services:
+
+  #15
+  maria:
+    image: mariadb:10.3
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "6306:3306"
+    volumes:
+      - ../datasys/maria392dbm/:/var/lib/mysql/ # folder for mysql's internal data files.
+      - .:/root # folder for scripts, etc.
+      - ../data/maria429/:/home # folder for exported data, etc.
+    networks:
+      - sister
+    # https://medium.freecodecamp.org/how-to-setup-log-rotation-for-a-docker-container-a508093912b2
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "50"
+
+  #15
+  nextcl:
+    image: nextcloud:15.0.5-apache
+    ports:
+      - 6218:80
+    depends_on:
+      - maria
+    volumes:
+      - ../datasys/nextcl429html/:/var/www/html
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - sister
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "250k"
+        max-file: "100"
+    # https://github.com/nextcloud/docker/issues/593 mysql_pass is not in docs for example.
+    # labels:
+    #   # caddy-gen info..
+    #   - "virtual.host=nc.dg24.tk nc-108-168-7-24.nip.io"
+    #   - "virtual.port=80"
+    #   - "virtual.tls-email=dgleba@gmail.com" # set to valid email to activate SSL
+    #   - "virtual.websockets" # enable websocket passthrough
+
+  #16
+  maria1500:
+    image: mariadb:10.3
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: always
+    env_file:
+      - .env.1500
+    ports:
+      - "6307:3306"
+    volumes:
+      - ../datasys/maria1500/:/var/lib/mysql/ # folder for mysql's internal data files.
+      # - .:/root # folder for scripts, etc.
+      # - ../data/maria429/:/home # folder for exported data, etc.
+    networks:
+      - sister
+    # https://medium.freecodecamp.org/how-to-setup-log-rotation-for-a-docker-container-a508093912b2
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "50"
+
+  #16
+  nextcl-1500:
+    image: nextcloud:15.0.0-apache
+    ports:
+      - 6219:80
+    depends_on:
+      - maria1500
+    volumes:
+      - ../datasys/nextcl-1500/:/var/www/html
+    restart: always
+    env_file:
+      - .env.1500
+    networks:
+      - sister
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "250k"
+        max-file: "100"
+    # https://github.com/nextcloud/docker/issues/593 mysql_pass is not in docs for example.
+    # labels:
+    #   # caddy-gen info..
+    #   - "virtual.host=nc.dg24.tk nc-108-168-7-24.nip.io"
+    #   - "virtual.port=80"
+    #   - "virtual.tls-email=dgleba@gmail.com" # set to valid email to activate SSL
+    #   - "virtual.websockets" # enable websocket passthrough
+# .

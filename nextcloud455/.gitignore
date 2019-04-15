@@ -1,0 +1,17 @@
+.DS_Store
+node_modules
+# start.sh
+
+# docker-compose.yml
+
+local.ini
+# docker.ini
+
+.env
+.env.*
+.env.local
+
+/x/
+backup/
+certs/
+copyof/
