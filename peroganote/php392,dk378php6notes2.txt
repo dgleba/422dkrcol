@@ -1,0 +1,360 @@
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+see installation at bottom of readme.md on this page..
+
+https://github.com/dgleba/public-static-page-xataface
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-27[Jun-Wed]16-48PM
+
+cd /var/www/html
+git clone https://github.com/dgleba/public-static-page-xataface.git actionlogin2
+cd actionlogin2
+touch templates_c/.keep
+cp config.dbc.example config.dbc
+cp conf-example.ini conf.ini
+cd ..
+git clone https://github.com/shannah/xataface.git
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+https://github.com/dgleba/public-static-page-xataface.git
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-27[Jun-Wed]16-33PM
+
+cd /var/www/html
+git clone https://github.com/dgleba/actionlogin-xataface.git actionlogin
+cd actionlogin
+touch templates_c/.keep
+cp config.dbc.example config.dbc
+cd ..
+git clone https://github.com/shannah/xataface.git
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-27[Jun-Wed]16-02PM
+
+# Dkr378php
+
+This repo creates a generic LAMP stack using docker.
+
+It serves up anything in `/var/www/html` on the server.
+
+To run it:  
+
+Install docker and docker-compose. I run it on linux ubuntu 16.04.
+
+I used:
+```
+docker --version
+Docker version 18.03.0-ce, build 0520e24
+docker-compose -version
+docker-compose version 1.21.2, build a133471
+```
+
+
+```
+cd /var/www/html
+git clone  https://github.com/dgleba/dkr378php.git
+cd dkr378php
+docker-compose up
+```
+
+Visit http://10.4.11.186:6021/ (http://10.4.11.186:6021/)
+
+http://10.4.11.186:6021/adminer/adminer.php
+ 
+http://10.4.11.186:6021/test2/strap179/
+
+Mysql is on:  `10.4.11.186:6022`
+
+user: `root` password: `root`
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-27[Jun-Wed]15-38PM
+
+git clone  https://github.com/dgleba/dkr378php.git
+
+
+10.4.11.186:6021
+ 
+10.4.11.186:6022
+ 
+http://10.4.11.186:6021/adminer/adminer.php
+ 
+http://10.4.11.186:6021/test2/strap179/
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-25[Jun-Mon]19-25PM
+
+192.168.88.46:6021
+
+
+
+378php4_php_web | 192.168.88.94 - - [25/Jun/2018:23:22:27 +0000] "GET /adminer HTTP/1.1" 301 594 "-" "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36"
+378php4_php_web | [Mon Jun 25 23:22:27.491160 2018] [autoindex:error] [pid 17] [client 192.168.88.94:62177] AH01276: Cannot serve directory /var/www/html/adminer/: No matching DirectoryIndex (index.php,index.html) found, and server-generated directory index forbidden by Options directive
+378php4_php_web | 192.168.88.94 - - [25/Jun/2018:23:22:27 +0000] "GET /adminer/ HTTP/1.1" 403 514 "-" "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36"
+378php4_php_web | 192.168.88.94 - - [25/Jun/2018:23:23:18 +0000] "-" 408 0 "-" "-"
+
+_____________
+
+albe@ubuntu1604a0311:/var/www/html$ sudo chmod -R 777 *
+[sudo] password for albe:
+
+
+fixed it.
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-25[Jun-Mon]21-05PM
+
+echo 'Options +Indexes' > .htaccess
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-25[Jun-Mon]21-37PM
+
+docker exec -it dkr378php6_mysql-b  mysql -uroot -proot
+
+
+works
+
+
+
+Last login: Mon Jun 25 20:58:59 2018 from 192.168.88.94
+albe@ubuntu1604a0311:~$ cd /var/www/html/
+albe@ubuntu1604a0311:/var/www/html$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+718feb066a6a        dkr378php6_phpb     "docker-php-entrypoi…"   16 minutes ago      Up 16 minutes       0.0.0.0:6021->80/tcp     dkr378php6_php_web-b
+1507d7140ac7        mysql               "docker-entrypoint.s…"   16 minutes ago      Up 16 minutes       0.0.0.0:3306->3306/tcp   dkr378php6_mysql-b
+albe@ubuntu1604a0311:/var/www/html$ docker exec -it dkr378php6_mysql-b  mysql -uroot -proot
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.11 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql>
+
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-25[Jun-Mon]21-51PM
+
+https://github.com/fideloper/docker-mysql
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-25[Jun-Mon]21-55PM
+
+docker exec -it <container-name/-id> bash
+
+docker exec -it dkr378php6_mysql-b bash
+
+docker exec -it dkr378php6mysqc bash
+
+docker exec -it dkr378php6c bash
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-25[Jun-Mon]22-52PM
+
+# Copyright (c) 2017, Oracle and/or its affiliates. All rights reserved.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 2 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+#
+# The MySQL  Server configuration file.
+#
+# For explanations see
+# http://dev.mysql.com/doc/mysql/en/server-system-variables.html
+
+[mysqld]
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+datadir         = /var/lib/mysql
+secure-file-priv= NULL
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+
+# Custom config should go here
+!includedir /etc/mysql/conf.d/
+
+root@1507d7140ac7:/# albe@ubuntu1604a0311:/var/www/html$
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+docker kill $(docker ps -q)
+
+
+docker rm $(docker ps -a -q)
+ 
+
+#  docker rmi $(docker images -q)
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-26[Jun-Tue]12-26PM
+
+docker exec -it 9f861478b936  mysql -uroot -proot
+
+
+albe@ubuntu1604a0311:~$ docker exec -it 9f861478b936  mysql -uroot -proot
+
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR 2005 (HY000): Unknown MySQL server host 'mysql' (0)
+albe@ubuntu1604a0311:~$
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-26[Jun-Tue]12-28PM
+
+result.
+
+
+works..
+
+http://10.4.11.186:6021/test2/strap179/
+
+http://10.4.11.186:6021/adminer/adminer.php?server=10.4.11.186&username=root
+
+System	
+Server	
+10.4.11.186
+Username	
+root
+Password	
+••••
+Database	
+ Permanent login
+  
+works.
+
+Create new database Privileges Process list Variables Status
+MySQL version: 5.7.22 through PHP extension PDO_MySQL
+Logged as: root@172.22.0.1
+ 	Database - Refresh	Collation	Tables	Size - Compute
+	information_schema	utf8_general_ci	?	?
+	mysql	latin1_swedish_ci	?	?
+	performance_schema	utf8_general_ci	?	?
+	sys	utf8_general_ci	?	?
+	test	latin1_swedish_ci	?	?
+Selected (0)
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Title:  .
+-----------------------2018-06-26[Jun-Tue]20-37PM
+
+http://10.4.1.227:6021/actionlogin/index.php?&-table=users&-cursor=0&-skip=0&-limit=30&-mode=list
+
+this works in pmdsdata4 docker with port 6022 mysql.
+
+
+
+[_database]
+    host="localhost"
+    host=10.4.1.227:6022
+    name="hrdb"
+    name="test"
+    user="hru"
+    user=root
+    password="xx"
+    password=root
+    driver=mysqli
+
+    
+http://10.4.1.227:6021/adminer/adminer.php?server=10.4.1.227%3A6022&username=root&db=test&select=users_xataface
+
+MySQL » 10.4.1.227:6022 » test » Select: users_xataface
+Select: users_xataface
+Select data Show structure Alter table New item
+ Action
+SELECT * FROM `users_xataface` LIMIT 50 (0.001 s) Edit
+
+ Modify	username	password	Role	comment_fld1	createdtime	updatedtime
+ edit	admin	adn	ADMIN	NULL	2015-10-05 15:25:55	NULL
+ edit	dgleba	c	ADMIN	NULL	2016-07-25 14:50:02	NULL
+ edit	pmdsdata	a	READ ONLY	NULL	2016-07-29 20:17:17	NULL
+ edit	qadave	qacd	ADMIN	NULL	2012-06-06 06:58:40	NULL
+ 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+=

@@ -1,0 +1,50 @@
+# dkr392php
+
+version: "3.6"
+
+services:
+  web:
+    #image: php:7.2.2-apache
+    build:
+      context: ./
+      dockerfile: Dockerfile-php
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./html/:/var/www/html/
+    ports:
+      - "6114:8091"
+    stdin_open: true
+    tty: true
+    networks:
+      - sister
+    environment:
+      - VIRTUAL_HOST=po-108-168-7-24.nip.io,t.dg24.tk
+      - LETSENCRYPT_HOST=po-108-168-7-24.nip.io,t.dg24.tk
+      - VIRTUAL_PORT=8091
+      - LETSENCRYPT_EMAIL=dgleba@gmail.com
+  # db:
+  # image: mysql
+  # # build: ./mysql
+  # # image: dkr378php8mysq
+  # # container_name: dkr378php8mysq
+  # restart: always
+  # env_file:
+  # - env
+  # # environment:
+  # # MYSQL_ROOT_PASSWORD: root
+  # # MYSQL_DATABASE: test
+  # # MYSQL_USER: dev
+  # # MYSQL_PASSWORD: dev
+  # # ports:
+  # # - "6022:3306"
+  # volumes:
+  # - ../data/mysql387php/:/var/lib/mysql/
+  # networks:
+  # - sister
+
+networks:
+  sister:
+    name: sister
+      external:true

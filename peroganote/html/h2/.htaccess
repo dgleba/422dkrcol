@@ -1,0 +1,22 @@
+<FilesMatch "\.ini$">
+Deny from all
+</FilesMatch>
+
+
+# ErrorDocument 503 "Call David Gleba at x232 and let him know you need the server --- PMDS data server is currently down for maintenance for about 1 hour."
+#   # ErrorDocument 503 "Our website is temporarily closed for maintenance. It should reopen by in a few minutes"
+# RewriteEngine On
+#   # TO ALLOW YOURSELF TO VISIT THE SITE, CHANGE 111 222 333 444 TO YOUR IP ADDRESS. 
+#   # RewriteCond %{REMOTE_ADDR} !^111\.222\.333\.444$
+# RewriteCond %{REMOTE_ADDR} !^127\.0\.0\.1$
+# RewriteRule .* - [R=503,L]
+ 
+
+# 
+# 
+# 
+# 
+# 
+#
+#
+ 
