@@ -9,8 +9,8 @@ services:
       context: ./
       dockerfile: Dockerfile-php
     restart: always
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     volumes:
       - ./html/:/var/www/html/
     ports:
@@ -24,6 +24,8 @@ services:
       - LETSENCRYPT_HOST=po-108-168-7-24.nip.io,t.dg24.tk
       - VIRTUAL_PORT=8091
       - LETSENCRYPT_EMAIL=dgleba@gmail.com
+
+      #
   # db:
   # image: mysql
   # # build: ./mysql

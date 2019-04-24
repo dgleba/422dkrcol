@@ -26,6 +26,7 @@ if (!isset($_GET['note']) || !preg_match('/^[a-zA-Z0-9_-]+$/', $_GET['note'])) {
     die;
 }
 
+// $path = __DIR__ . '/../_tmp/' . $_GET['note'];
 $path = '_tmp/' . $_GET['note'];
 
 if (isset($_POST['text'])) {
