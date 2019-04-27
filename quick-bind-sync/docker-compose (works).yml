@@ -5,7 +5,7 @@ services:
     image: php:7.2-apache
     volumes:
       #  # container folder to sync. You set it..
-      - php-v1:/etc/apache2/conf-enabled
+      - quick-sync-volume:/etc/apache2/conf-enabled
 
   php_sync:
     # image: codycraven/quick-bind-sync:latest
@@ -15,14 +15,14 @@ services:
     depends_on:
       - php
     volumes:
-      - php-v1:/volume # reserved name for this sync tool
+      - quick-sync-volume:/volume # reserved name for this sync tool
       - type: bind
         # host folder to sync. You set it..
         source: ../x/a2conf
         target: /host # reserved name for this sync tool
 
 volumes:
-  php-v1:
+  quick-sync-volume:
 #
 #
 # notes..
