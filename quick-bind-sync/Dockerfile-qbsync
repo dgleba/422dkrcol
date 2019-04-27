@@ -12,11 +12,12 @@ RUN apk add --no-cache \
 	unison
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD [ \
-	"unison", "/host", "/volume", \
+	"unison",  "/host",  "/volume", \
 	"-auto", \
 	"-batch", \
 	"-repeat", "watch", \

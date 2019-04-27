@@ -11,7 +11,8 @@ services:
     volumes:
       - type: volume
         source: quick-sync-volume
-        target: /var/www/html
+        # container folder to sync..
+        target: /etc/apache2
 
   php_sync:
     # image: codycraven/quick-bind-sync:latest
@@ -22,11 +23,12 @@ services:
       - php
     volumes:
       - type: bind
-        source: .
+        # host folder to sync..
+        source: ./vol
         target: /host
       - type: volume
         source: quick-sync-volume
         target: /volume
 
-volumes: quick-sync-volume:
-
+volumes:
+  quick-sync-volume:
