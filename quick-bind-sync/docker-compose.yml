@@ -1,0 +1,32 @@
+version: "3.6"
+
+networks:
+  sister:
+    name: sister
+      external:true
+
+services:
+  php:
+    image: php:7.2-apache
+    volumes:
+      - type: volume
+        source: quick-sync-volume
+        target: /var/www/html
+
+  php_sync:
+    # image: codycraven/quick-bind-sync:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile-qbsync
+    depends_on:
+      - php
+    volumes:
+      - type: bind
+        source: .
+        target: /host
+      - type: volume
+        source: quick-sync-volume
+        target: /volume
+
+volumes: quick-sync-volume:
+
