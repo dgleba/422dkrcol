@@ -6,6 +6,10 @@ services:
     volumes:
       #  # container folder to sync. You set it..
       - quick-sync-volume:/etc/apache2/conf-enabled
+    # volumes:
+    #   - type: volume
+    #     source: quick-sync-volume
+    #     target: /etc/apache2/conf-enabled
 
   php_sync:
     # image: codycraven/quick-bind-sync:latest
@@ -20,10 +24,9 @@ services:
         # host folder to sync. You set it..
         source: ../x/a2conf
         target: /host # reserved name for this sync tool
+      # - type: volume
+      #   source: quick-sync-volume
+      #   target: /volume
 
 volumes:
   quick-sync-volume:
-#
-#
-# notes..
-#   mkdir -p ../x/a2conf
