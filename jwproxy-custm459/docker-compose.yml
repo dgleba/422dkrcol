@@ -1,0 +1,68 @@
+version: "3.6"
+
+# custom config
+# https://stackoverflow.com/questions/39514293/docker-nginx-proxy-how-to-route-traffic-to-different-container-using-path-and-n?rq=1
+
+# networks:
+#   sister:
+#     name: sister
+#       external:true
+
+services:
+  nginxproxy459:
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./vol/vhost.d/:/etc/nginx/vhost.d:ro
+      - ./vol/certs/:/etc/nginx/certs:ro
+      - ./vol/html/:/usr/share/nginx/html
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+    restart: always
+    # networks:
+    #   - sister
+
+  gateway:
+    image: nginx:1.15-alpine
+    volumes:
+      - ./nindex.html:/usr/share/nginx/html/index.html
+    expose:
+      - "80"
+    environment:
+      - VIRTUAL_HOST=whoami.local
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=web-104-193-61-58.nip.io
+      - LETSENCRYPT_EMAIL=d@gmail.com
+    restart: always
+
+  # gateway21:
+  #   image: jwilder/whoami
+  #   environment:
+  #     - VIRTUAL_HOST=whoami.local
+
+  app1:
+    image: jwilder/whoami
+
+  app2:
+    image: jwilder/whoami
+#
+#
+#
+# letsencrypt:
+#   image: jrcs/letsencrypt-nginx-proxy-companion:v1.9
+#   depends_on:
+#     - jw-nginx-proxy
+#   volumes:
+#     - /var/run/docker.sock:/var/run/docker.sock:ro
+#     - ./vol/vhost.d:/etc/nginx/vhost.d
+#     - ./vol/certs:/etc/nginx/certs:rw
+#     - ./vol/html:/usr/share/nginx/html
+#   restart: always
+#   networks:
+#     - sister
+#   # links will share the volumes between containers.
+#   links:
+#     - jw-nginx-proxy
