@@ -1,0 +1,32 @@
+version: "3.6"
+
+services:
+  seafile:
+    image: seafileltd/seafile:6.2.5
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ../datasys/seafiledata:/shared
+    ports:
+      - "6311:80"
+    networks:
+      - sister
+    environment:
+      - VIRTUAL_HOST=sf-104-193-61-58.nip.io
+      - LETSENCRYPT_HOST=sf-104-193-61-58.nip.io
+      - LETSENCRYPT_EMAIL=dgleba@gmail.com
+
+networks:
+  sister:
+    name: sister
+      external:true
+#
+#
+# docker run -d --name seafile \
+#   -e SEAFILE_SERVER_HOSTNAME=seafile.example.com \
+#   -e SEAFILE_ADMIN_EMAIL=me@example.com \
+#   -e SEAFILE_ADMIN_PASSWORD=a_very_secret_password \
+#   -v /opt/seafile-data:/shared \
+#   -p 80:80 \
+#   {host}/seafileltd/seafile-pro:latest
