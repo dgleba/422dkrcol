@@ -1,14 +1,68 @@
-# Project: jwproxy-custm459
+# Project: jwproxy-custm459le
 
 Custom nginx config for jwilder proxy.
 
-sftp://104.193.61.58:47161/srv/dkr/jwproxy-custm459
+sftp://104.193.61.58:47161/srv/dkr/jwproxy-custm459le
 
 dgpcs9 series 9 test port-80-443
 
 # Instructions..
 
 https://stackoverflow.com/questions/39514293/docker-nginx-proxy-how-to-route-traffic-to-different-container-using-path-and-n?rq=1
+
+## get config..
+
+docker-compose exec nginxproxy459le cat /etc/nginx/conf.d/default.conf
+
+# Curl the gateway..
+
+    \$ curl https://gw-104-193-61-58.nip.io/
+
+    <hr />
+    This is jwproxy-custm459le - nindex.html - v23
+    <hr />
+
+## .
+
+    curl https://gw-104-193-61-58.nip.io/app2
+
+    dgleba@PMDS-3HZGD42 /cygdrive/c/n/Dropbox/csd/serve/vamp206a/a3
+    $ curl https://gw-104-193-61-58.nip.io/app2
+    I'm 34bd81061ff1
+
+## .
+
+    \$ curl https://gw-104-193-61-58.nip.io/app1
+    I'm 6b2a85fe059b
+
+## .
+
+    + docker ps
+    CONTAINER ID        IMAGE                                        PORTS                                      NAMES
+    978b94ac13d5        jrcs/letsencrypt-nginx-proxy-companion:v1.9                                             jwproxy-custm459le_letsencrypt_1
+    34bd81061ff1        jwilder/whoami                               8000/tcp                                   jwproxy-custm459le_app2_1
+    4c1cb2ec77e8        jwilder/nginx-proxy:alpine                   0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp   jwproxy-custm459le_nginxproxy459le_1
+    3b6c4d417d3c        nginx:1.15-alpine                            80/tcp                                     jwproxy-custm459le_gateway_1
+    6b2a85fe059b        jwilder/whoami                               8000/tcp                                   jwproxy-custm459le_app1_1
+    albe@vamp398:/srv/dkr/422dkrcol/jwproxy-custm459le$
+
+---
+
+---
+
+---
+
+# Older stuff.
+
+===================================================
+
+===================================================
+
+===================================================
+
+---
+
+---
 
 echo '127.0.0.1 whoami.local' | sudo tee -a /etc/hosts
 cat /etc/hosts
@@ -115,3 +169,7 @@ https://blog.ippon.tech/set-up-a-reverse-proxy-nginx-and-docker-gen-bonus-lets-e
 https://github.com/buchdag/letsencrypt-nginx-proxy-companion-compose
 
 https://github.com/buchdag/letsencrypt-nginx-proxy-companion-compose/blob/master/2-containers/compose-v3/environment/docker-compose.yaml
+
+```
+
+```
