@@ -1,8 +1,12 @@
-# Project: jwproxy-custm459le
+# Project: proxyseafile
 
-Custom nginx config for jwilder proxy.
+Seafile Custom nginx config for jwilder proxy.
 
-sftp://104.193.61.58:47161/srv/dkr/jwproxy-custm459le
+# Status
+
+works with ver 6.2.5 of seafile docker.
+
+sftp://104.193.61.58:47161/srv/dkr/422dkrcol/proxyseafile
 
 dgpcs9 series 9 test port-80-443
 
@@ -10,9 +14,47 @@ dgpcs9 series 9 test port-80-443
 
 https://stackoverflow.com/questions/39514293/docker-nginx-proxy-how-to-route-traffic-to-different-container-using-path-and-n?rq=1
 
-## get config..
+## Get config..
+
+mkdir -p docs
+docker-compose exec nginxproxy cat /etc/nginx/conf.d/default.conf > docs/generated.conf
 
 docker-compose exec nginxproxy459le cat /etc/nginx/conf.d/default.conf
+
+---
+
+chmod 777 -R /srv/dkr/422dkrcol/proxyseafile/jw-vhost.d/
+
+---
+
+# Error on 6.3.4
+
+with seafile docker 6.3.4 I get error..
+
+https://sf-104-193-61-58.nip.io/#my-libs/
+
+Bad Request
+Contradictory scheme headers
+
+---
+
+---
+
+---
+
+===================================================
+
+===================================================
+
+===================================================
+
+# Older stuff.
+
+===================================================
+
+===================================================
+
+===================================================
 
 # Curl the gateway..
 
@@ -52,18 +94,6 @@ docker-compose exec nginxproxy459le cat /etc/nginx/conf.d/default.conf
 
 ---
 
-# Older stuff.
-
-===================================================
-
-===================================================
-
-===================================================
-
----
-
----
-
 echo '127.0.0.1 whoami.local' | sudo tee -a /etc/hosts
 cat /etc/hosts
 
@@ -90,26 +120,6 @@ cat /etc/hosts
 # From:
 
 https://github.com/jwilder/nginx-proxy
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
 
 ---
 
