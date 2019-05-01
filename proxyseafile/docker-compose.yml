@@ -1,3 +1,5 @@
+# proxyseafile - https://github.com/dgleba/422dkrcol/tree/master/proxyseafile
+
 version: "3.6"
 
 # custom config for jwilder..
@@ -6,14 +8,15 @@ version: "3.6"
 services:
   nginxproxy:
     image: jwilder/nginx-proxy:alpine
+    #user: "${UID}:${GID}"
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./vol/vhost.d/:/etc/nginx/vhost.d
-      - ./vol/certs/:/etc/nginx/certs:ro
-      - ./vol/html/:/usr/share/nginx/html
+      - ./jw-vhost.d/:/etc/nginx/vhost.d
+      - ./certs/:/etc/nginx/certs:ro
+      - ./jw-html/:/usr/share/nginx/html
     labels:
       com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
     restart: always
@@ -26,21 +29,13 @@ services:
       - nginxproxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./vol/vhost.d/:/etc/nginx/vhost.d
-      - ./vol/certs/:/etc/nginx/certs:rw
-      - ./vol/html/:/usr/share/nginx/html
+      - ./jw-vhost.d/:/etc/nginx/vhost.d
+      - ./certs/:/etc/nginx/certs:rw
+      - ./jw-html/:/usr/share/nginx/html
     restart: always
     # links will share the volumes between containers.
     links:
       - nginxproxy
-
-  # sfgateway:
-  #   image: nginx:1.15-alpine
-  #   volumes:
-  #     - ./nindex.html:/usr/share/nginx/html/index.html
-  #   expose:
-  #     - "80"
-  #   restart: always
 
   seafile:
     image: seafileltd/seafile:6.2.5
