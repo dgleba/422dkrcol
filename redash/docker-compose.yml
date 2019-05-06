@@ -1,4 +1,4 @@
-version: '3.6'
+version: "3.6"
 x-redash-service: &redash-service
   image: redash/redash:7.0.0.b18042
   depends_on:
@@ -13,7 +13,11 @@ services:
     ports:
       - "5000:5000"
     environment:
-      REDASH_WEB_WORKERS: 4
+      - REDASH_WEB_WORKERS=4
+      - VIRTUAL_PORT=5000
+      - VIRTUAL_HOST=rd-104-193-61-58.nip.io
+      - LETSENCRYPT_HOST=rd-104-193-61-58.nip.io
+      - LETSENCRYPT_EMAIL=d@gmail.com
   scheduler:
     <<: *redash-service
     command: scheduler
@@ -42,11 +46,11 @@ services:
       - ../datasys/redash-postgres-data:/var/lib/postgresql/data
     restart: always
   # nginx:
-    # image: redash/nginx:latest
-    # ports:
-      # - "80:80"
-    # depends_on:
-      # - server
-    # links:
-      # - server:redash
-    # restart: always
+  # image: redash/nginx:latest
+  # ports:
+  # - "80:80"
+  # depends_on:
+  # - server
+  # links:
+  # - server:redash
+  # restart: always
