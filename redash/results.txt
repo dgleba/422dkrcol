@@ -1,0 +1,113 @@
+
+
+just redash and jwilder proxy running.
+
+looks like 2.2 gb memory needed.
+
+
+
+----------------------------------------------------
+Title:  .
+-----------------------2019-05-06[May-Mon]21-27PM
+
+
+KiB Mem :  1661132 total,     
+KiB Swap:      496948 used.   
+
+
+albe@vamp398:/srv/dkr/422dkrcol$ top
+top - 21:26:01 up 8 days, 22:44,  3 users,  load average: 0.08, 0.20, 0.16
+Tasks: 165 total,   1 running, 163 sleeping,   0 stopped,   1 zombie
+%Cpu(s):  2.7 us,  1.0 sy,  0.0 ni, 96.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem :  1661132 total,    68784 free,  1224544 used,   367804 buff/cache
+KiB Swap:   999420 total,   502472 free,   496948 used.   224212 avail Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND
+20135 albe      20   0  336532  23732   3252 S  0.7  1.4   0:32.26 docker-compose
+22147 systemd+  20   0   30884   6052   1336 S  0.7  0.4   0:38.14 redis-server
+22693 albe      20   0  705572  25984   2836 S  0.7  1.6   0:38.12 docker-compose
+26693 albe      20   0   40524   3776   3140 R  0.7  0.2   0:00.07 top
+ 1075 root      20   0  633560  16032   4052 S  0.3  1.0  12:38.97 containerd
+19176 albe      20   0   92836   2676   1720 S  0.3  0.2   0:00.44 sshd
+20475 root      20   0   11788   3952   2912 S  0.3  0.2   0:01.40 containerd-shim
+20865 root      20   0   14552   2256    216 S  0.3  0.1   0:36.46 docker-gen
+21115 root      20   0   15780   3228   1592 S  0.3  0.2   0:35.18 docker-gen
+22874 albe      20   0  633356  49904   9524 S  0.3  3.0   0:39.24 celery
+22992 albe      20   0  633408 144284  10044 S  0.3  8.7   0:50.46 celery
+23000 albe      20   0  633364  36464   9576 S  0.3  2.2   0:39.27 celery
+    1 root      20   0   37824   4872   3400 S  0.0  0.3   1:04.45 systemd
+    2 root      20   0       0      0      0 S  0.0  0.0   0:00.13 kthreadd
+    3 root      20   0       0      0      0 S  0.0  0.0   2:15.06 ksoftirqd/0
+    5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H
+    7 root      20   0       0      0      0 S  0.0  0.0   1:22.39 rcu_sched
+    8 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_bh
+    9 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0
+   10 root      rt   0       0      0      0 S  0.0  0.0   0:14.57 watchdog/0
+   11 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kdevtmpfs
+   12 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 netns
+   13 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 perf
+   14 root      20   0       0      0      0 S  0.0  0.0   0:00.66 khungtaskd
+   15 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 writeback
+
+albe@vamp398:/srv/dkr/422dkrcol$
+
+
+_____________
+
+
+albe@vamp398:/srv/dkr/422dkrcol$ dkps
++ docker images
+REPOSITORY                               TAG                 IMAGE ID            CREATED             SIZE
+mariadb                                  10.3                1d1a9e0f0e60        10 days ago         381MB
+postgres                                 9.5-alpine          e2ac3f43a7db        12 days ago         36.9MB
+nginx                                    1.15-alpine         031c45582fce        3 weeks ago         16.1MB
+nginx                                    alpine              031c45582fce        3 weeks ago         16.1MB
+nginx                                    1.14-alpine         8a2fb25a19f5        3 weeks ago         16MB
+redis                                    5.0-alpine          c8eda26fcdab        3 weeks ago         50.9MB
+nextcloud                                15.0.5-apache       cdcc2877d67b        5 weeks ago         598MB
+redash/redash                            7.0.0.b18042        3cc82e753890        6 weeks ago         1.37GB
+seafileltd/seafile                       6.3.4               68e4dbd7c90d        2 months ago        1.03GB
+seafileltd/seafile                       latest              68e4dbd7c90d        2 months ago        1.03GB
+jwilder/nginx-proxy                      alpine              7683e3ec127c        3 months ago        53MB
+jrcs/letsencrypt-nginx-proxy-companion   v1.9                4366696e3384        8 months ago        85.3MB
+alpine/socat                             latest              44e76e407cbc        10 months ago       7.46MB
+seafileltd/seafile                       6.2.5               7e8327257e54        11 months ago       817MB
+jwilder/whoami                           latest              89be8564e650        12 months ago       10.1MB
+redash/nginx                             latest              76abf32984e9        3 years ago         134MB
++ docker network ls
+NETWORK ID          NAME                   DRIVER              SCOPE
+2a863cb12565        bridge                 bridge              local
+5c4994b6e087        host                   host                local
+fde6270220d4        none                   null                local
+70b155cfda9d        sister external:true   bridge              local
++ docker volume ls
+DRIVER              VOLUME NAME
+local               b0b4ce06133d0c1e377c052b1c607b3f51099653f3e8415f05241f159b8bcc7f
+local               bd4406757877adde8ef507c0f737e57bd72334f58209284c7ca2617222213997
++ docker ps -a
+CONTAINER ID        IMAGE                                         COMMAND                  CREATED             STATUS              PORTS                                      NAMES
+04c51fca4dcc        jrcs/letsencrypt-nginx-proxy-companion:v1.9   "/bin/bash /app/entr…"   2 hours ago         Up 2 hours                                                     proxy457_letsencrypt_1
+929a6c7dfd53        redash/nginx:latest                           "nginx -g 'daemon of…"   2 hours ago         Up 2 hours          80/tcp, 443/tcp                            redash_nginx_1
+21af1dff8f47        jwilder/nginx-proxy:alpine                    "/app/docker-entrypo…"   2 hours ago         Up 2 hours          0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp   proxy457_nginx-proxy_1
+90e6266cddb9        redash/redash:7.0.0.b18042                    "/app/bin/docker-ent…"   2 hours ago         Up 2 hours          0.0.0.0:5000->5000/tcp                     redash_server_1
+94b952ec1102        redash/redash:7.0.0.b18042                    "/app/bin/docker-ent…"   2 hours ago         Up 2 hours          5000/tcp                                   redash_adhoc_worker_1
+fd46314d6f26        redash/redash:7.0.0.b18042                    "/app/bin/docker-ent…"   2 hours ago         Up 2 hours          5000/tcp                                   redash_scheduler_1
+3fb6703610e8        redash/redash:7.0.0.b18042                    "/app/bin/docker-ent…"   2 hours ago         Up 2 hours          5000/tcp                                   redash_scheduled_worker_1
+41132e79d56d        postgres:9.5-alpine                           "docker-entrypoint.s…"   2 hours ago         Up 2 hours          5432/tcp                                   redash_postgres_1
+c9b12b277b64        redis:5.0-alpine                              "docker-entrypoint.s…"   2 hours ago         Up 2 hours          6379/tcp                                   redash_redis_1
++ docker ps
+CONTAINER ID        IMAGE                                         COMMAND                  CREATED             STATUS              PORTS                                      NAMES
+04c51fca4dcc        jrcs/letsencrypt-nginx-proxy-companion:v1.9   "/bin/bash /app/entr…"   2 hours ago         Up 2 hours                                                     proxy457_letsencrypt_1
+929a6c7dfd53        redash/nginx:latest                           "nginx -g 'daemon of…"   2 hours ago         Up 2 hours          80/tcp, 443/tcp                            redash_nginx_1
+21af1dff8f47        jwilder/nginx-proxy:alpine                    "/app/docker-entrypo…"   2 hours ago         Up 2 hours          0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp   proxy457_nginx-proxy_1
+90e6266cddb9        redash/redash:7.0.0.b18042                    "/app/bin/docker-ent…"   2 hours ago         Up 2 hours          0.0.0.0:5000->5000/tcp                     redash_server_1
+94b952ec1102        redash/redash:7.0.0.b18042                    "/app/bin/docker-ent…"   2 hours ago         Up 2 hours          5000/tcp                                   redash_adhoc_worker_1
+fd46314d6f26        redash/redash:7.0.0.b18042                    "/app/bin/docker-ent…"   2 hours ago         Up 2 hours          5000/tcp                                   redash_scheduler_1
+3fb6703610e8        redash/redash:7.0.0.b18042                    "/app/bin/docker-ent…"   2 hours ago         Up 2 hours          5000/tcp                                   redash_scheduled_worker_1
+41132e79d56d        postgres:9.5-alpine                           "docker-entrypoint.s…"   2 hours ago         Up 2 hours          5432/tcp                                   redash_postgres_1
+c9b12b277b64        redis:5.0-alpine                              "docker-entrypoint.s…"   2 hours ago         Up 2 hours          6379/tcp                                   redash_redis_1
++ set +vx
+albe@vamp398:/srv/dkr/422dkrcol$
+
+
+----------------------------------------------------
