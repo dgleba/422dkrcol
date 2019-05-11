@@ -1,0 +1,52 @@
+version: "3.6"
+
+services:
+  adminer:
+    image: adminer:4.6
+    restart: always
+    ports:
+      - "6115:8080"
+    networks:
+      - sister
+
+##
+
+networks:
+  #
+  # new network callout  2019-05-11
+  sister:
+    name: sister
+    #
+##
+
+# sister:
+#   name: sister
+#   external: true  # i may not need external 2019-05-11
+#
+# this is not what I want.
+# sister:
+# albe@vamp398:/srv/dkr/422dkrcol/adminer$ dkup
+# Creating network "adminer_sister" with the default driver
+# Creating adminer_adminer_1 ... done
+# Attaching to adminer_adminer_1
+# adminer_1  | PHP 7.2.12 Development Server started at Sat May 11 16:48:07 2019
+
+##
+
+# sister:
+#   name: sister
+#   external: true  # i may not need external 2019-05-11
+#
+# albe@vamp398:/srv/dkr/422dkrcol/adminer$ dkup
+# ERROR: Network sister declared as external, but could not be found. Please create the network manually using `docker network create sister` and try again.
+# albe@vamp398:/srv/dkr/422dkrcol/adminer$ docker network create sister
+# e9f324c35182d1dbb57b597a21dced40770c172366529768697906eb5ce3d51f
+# albe@vamp398:/srv/dkr/422dkrcol/adminer$ dkup
+# Pulling adminer (adminer:4.6)...
+
+##
+
+# working v1, but may not be correct 2018.
+# sister:
+#   name: sister
+#     external:true
