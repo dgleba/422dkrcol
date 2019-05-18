@@ -1,0 +1,22 @@
+version: "3.6"
+services:
+  ms-sql:
+    image: "mcr.microsoft.com/mssql/server:2017-CU11-ubuntu"
+    ports:
+      - "1433:1433"
+    env_file: .env
+    # restart: always
+    volumes:
+      - ../datasys/mssqldata:/var/opt/mssql
+    networks:
+      - sister
+      #
+
+##
+networks:
+  #
+  #  new network callout  2019-05-11
+  sister:
+    name: sister
+    #
+##

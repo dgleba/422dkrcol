@@ -1,0 +1,76 @@
+version: "3.6"
+services:
+  gateway:
+    image: kcollins/ignition:latest # You can change `latest` to a specific version, e.g. `7.9.10`
+    ports:
+      - "8088:8088"
+    stop_grace_period: 30s
+    secrets:
+      - gateway-password
+    volumes:
+      # - ./gateway_backup.gwbk:/restore.gwbk
+      - gateway_data:/var/lib/ignition
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    environment:
+      GATEWAY_ADMIN_PASSWORD_FILE: /run/secrets/gateway-password
+
+  db:
+    image: mariadb:10.3
+    # command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    # restart: always
+    env_file:
+      - .env
+    ports:
+      - "6307:3306"
+    volumes:
+      - ../datasys/maria461/:/var/lib/mysql/ # folder for mysql's internal data files.
+      # - .:/root # folder for scripts, etc.
+      - ../data/maria461/:/home # folder for exported data, etc.
+    # networks:
+    #   - sister
+    # https://medium.freecodecamp.org/how-to-setup-log-rotation-for-a-docker-container-a508093912b2
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100k"
+        max-file: "50"
+
+secrets:
+  # mysql-root-password:
+  #   file: ./secrets/MYSQL_ROOT_PASSWORD
+  # mysql-password:
+  #   file: ./secrets/MYSQL_PASSWORD
+  gateway-password:
+    file: ./secrets/GATEWAY_PASSWORD
+
+volumes:
+  gateway_data:
+  # db_data:
+#
+
+# db:
+#   image: mysql:5.7
+#   ports:
+#     # Note that the 3306 port doesn't need to be published here for the gateway container to connect,
+#     # only for external connectivity to the database.
+#     - "3306:3306"
+#   volumes:
+#    - db_data:/var/lib/mysql
+#   logging:
+#     driver: "json-file"
+#     options:
+#       max-size: "200k"
+#       max-file: "10"
+#   secrets:
+#     - mysql-root-password
+#     - mysql-password
+#   environment:
+#     # See https://hub.docker.com/_/mysql/ for more information
+#     MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql-root-password
+#     MYSQL_DATABASE: ignition
+#     MYSQL_USER: ignition
+#     MYSQL_PASSWORD_FILE: /run/secrets/mysql-password
