@@ -1,29 +1,32 @@
-version: '3.6'
+version: "3.6"
 services:
   site:
     image: evns/grav
     #restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - "7501:80"
+      - "7502:443"
     volumes:
       - backup:/var/www/grav-admin/
       - ./backups:/var/www/grav-admin/backup
       - ./gravuserpages:/var/www/grav-admin/user/pages
       - .:/crib
       # - gravuserpages:/var/www/grav-admin/user/pages
-
       # This overwrites the container files.
       #- ./gravuserpages:/var/www/grav-admin/user/pages
       # This overwrites the container files.
       # - type: bind
-        # source: ./gravuserpages
-        # target: /var/www/grav-admin/user/pages
-
+      # source: ./gravuserpages
+      # target: /var/www/grav-admin/user/pages
     env_file:
       - .env
+    environment:
+      - VIRTUAL_HOST=grav-108-168-7-24.nip.io, g.davidg.ml
+      - LETSENCRYPT_HOST=grav-108-168-7-24.nip.io, g.davidg.ml
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_EMAIL=dgleba@gmail.com
+
 volumes:
   backup:
   gravuserpages:
     #external: false
-    
