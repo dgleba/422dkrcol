@@ -1,0 +1,20 @@
+bludit:
+  image: bludit/docker:latest
+  # environment:
+  #   VIRTUAL_HOST: bd.davidg.ml
+  volumes:
+    - ./data:/usr/share/nginx/html/bl-content
+  expose:
+    - "80"
+  ports:
+    - "8004:80"
+  # restart: always
+#
+#
+#
+# docker run --name bludit \
+#     -p 8000:80 \
+#     -v ~/bludit:/usr/share/nginx/html/bl-content \
+#     -d bludit/docker:latest
+#
+
