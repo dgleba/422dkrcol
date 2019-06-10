@@ -17,6 +17,7 @@ services:
         max-file: "10"
     environment:
       GATEWAY_ADMIN_PASSWORD_FILE: /run/secrets/gateway-password
+    restart: always
 
   db:
     image: mariadb:10.3
@@ -38,6 +39,7 @@ services:
       options:
         max-size: "100k"
         max-file: "50"
+    restart: always
 
 secrets:
   # mysql-root-password:
