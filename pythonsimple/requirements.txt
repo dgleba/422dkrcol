@@ -1,0 +1,2 @@
+altgraph==0.16.1
+mysql-connector-python==8.0.16

@@ -1,0 +1,19 @@
+
+version: '3.6'
+services:
+
+  python:
+    image: python:3.7-alpine
+    # restart: always
+    # ports:
+    #   - 5000:5000
+    env_file:
+      - .env
+    working_dir: /app
+    volumes:
+      - ./:/app   
+      # https://stackoverflow.com/questions/25305788/how-to-avoid-reinstalling-packages-when-building-docker-image-for-python-project
+      - $HOME/.cache/pip/:/root/.cache/pip
+    command: pip install -r requirements.txt  
+    # networks:
+    #   - sister 

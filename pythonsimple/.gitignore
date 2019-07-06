@@ -1,0 +1,11 @@
+
+.env
+creds.py
+
+__py_cache__
+
+datasys/
+data/
+
+x/
+certs/
