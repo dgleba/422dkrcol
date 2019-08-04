@@ -47,6 +47,6 @@ networks:
 ##
 
 # working v1, but may not be correct 2018.
-# sister:
-#   name: sister
-#     external:true
+#-sister:
+#---name: sister
+#-----external:true
