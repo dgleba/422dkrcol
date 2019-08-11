@@ -1,0 +1,14 @@
+grav:
+  # image: yobasystems/alpine-grav:latest
+  # image: grav:latest
+  build: .
+  environment:
+    xVIRTUAL_HOST: b.davidg.ml
+  # expose:
+  # - "3004"
+  ports:
+    - "3004:80"
+  volumes:
+    - ./gravhtml:/var/www/html
+    # - ./grav-c:/var/www/html:cached
+  restart: always

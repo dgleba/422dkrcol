@@ -1,0 +1,9 @@
+.DS_Store
+node_modules
+# start.sh
+# local.ini
+docker.ini
+.env
+
+gravhtml/
+grav-c/
