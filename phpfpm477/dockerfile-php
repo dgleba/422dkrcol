@@ -1,0 +1,12 @@
+FROM php:7.2-fpm
+
+RUN apt-get update && apt-get install -y libmcrypt-dev \
+  mariadb-client libmagickwand-dev --no-install-recommends \
+  libpng-dev curl libcurl4-openssl-dev zlib1g-dev  libzip-dev\
+  --no-install-recommends \
+  && docker-php-ext-configure gd --with-gd  --with-jpeg-dir \
+    --with-png-dir --with-zlib-dir   \
+  && pecl install imagick mcrypt \
+  && docker-php-ext-enable imagick \
+  && docker-php-ext-install pdo_mysql pdo pdo_mysql gd curl mysqli zip
+
