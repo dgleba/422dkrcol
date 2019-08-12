@@ -1,0 +1,12 @@
+version: "3.6"
+services:
+  pico:
+    restart: unless-stopped
+    # image: php:7.3-apache
+    build:
+      context: ./
+      dockerfile: dockerfile-php
+    ports:
+      - 8003:80
+    volumes:
+      - ./data:/var/www/html
