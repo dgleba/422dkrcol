@@ -1,0 +1,54 @@
+version: "3.6"
+#
+services:
+  #
+  php:
+    restart: unless-stopped
+    # image: php:7.3-apache
+    build:
+      context: ./
+      dockerfile: dockerfile-php
+    ports:
+      - 8003:80
+    volumes:
+      - ../data/php483b:/var/www/html
+      - ./apache_allow.conf:/etc/apache2/conf-enabled/apache_allow.conf
+      # This wipes out the files in the container... - ../data/c-php483b_etc_apache2:/etc/apache2
+      # this noworky either..
+      # - type: volume
+      #   source: etc_apache2
+      #   target: /etc/apache2 #/path/in/container
+      #   read_only: true
+      # - ./data1:/var/www/html
+      # - ./apache2.conf:/etc/apache2/apache2.conf
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
+  #
+
+  db:
+    image: mysql:5.7.26
+    #container_name: mysqldbm
+    # build: .
+    restart: always
+    env_file:
+      - .env
+    # environment:
+    # MYSQL_ROOT_PASSWORD: root
+    # MYSQL_DATABASE: test
+    ports:
+      - "6119:3306"
+    volumes:
+      - ../data/mysql483/:/var/lib/mysql/ # folder for mysql's internal data files.
+      - .:/root # folder for scripts, etc.
+      - ../../data/data483mysqldb/:/home # folder for exported data, etc.
+    # networks:
+    #   - sister
+    # https://medium.freecodecamp.org/how-to-setup-log-rotation-for-a-docker-container-a508093912b2
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100k"
+        max-file: "99"
+
+volumes:
+  etc_apache2:
