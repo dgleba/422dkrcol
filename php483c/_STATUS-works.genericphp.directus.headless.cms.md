@@ -1,7 +1,16 @@
 2019-09-07_Sat_17.29-PM
 
-2019-08-11_Sun_22.48-PM
+```
+
+works.
+
+tested with
+
+-directus cms api headless cms 2019-09-08
+-xataface 3.0  2019-09-08
+
+
+
+```
 
 dgleba@gmail.com
-
-works

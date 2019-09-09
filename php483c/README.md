@@ -1,5 +1,9 @@
 # php483 a generic php docker setup
 
+# Status.
+
+See the \_status...md file.
+
 # Commands
 
 ```
@@ -7,8 +11,8 @@
 12.
 
 dts=$(date +"%Y-%m-%d_%H.%M.%S"); seq 1 45 | xargs -I{} date ; \
-  docker-compose build  \
-   ;  seq 1 5 | xargs -I{} date ;  echo Started__ $dts \_\_ -=-=-=-=-=-=-=-=-=-=-=-
+  docker-compose build --force-rm \
+   ;  seq 1 10 | xargs -I{} date ;  echo Started__ $dts \_\_ -=-=-=-=-=-=-=-=-=-=-=-
 
 
 22.
