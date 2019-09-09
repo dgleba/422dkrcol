@@ -16,11 +16,22 @@ dts=$(date +"%Y-%m-%d_%H.%M.%S"); seq 1 45 | xargs -I{} date ; \
 https://docs.directus.io/getting-started/installation.html#setup
 
 
+sudo chown -R  $USER:www-data ../data/php483d1
+
+
+# Careful, you could damage the mysql permissions..
 sudo chown -R  $USER:$USER ../data
 sudo chown -R  $USER:www-data ../data
 
 
-32.
+
+32a.
+
+git clone --depth 2  https://github.com/shannah/xataface.git ../data/php483d1/xataface
+
+
+
+32b.
 
 git clone --depth 1  https://github.com/directus/directus.git ../data/php483b
 
