@@ -9,7 +9,7 @@ services:
       context: ./
       dockerfile: dockerfile-php
     ports:
-      - 8003:80
+      - 8300:80
     volumes:
       - ../data/php483d1:/var/www/html
       - ./apache_allow.conf:/etc/apache2/conf-enabled/apache_allow.conf
@@ -36,7 +36,7 @@ services:
     # MYSQL_ROOT_PASSWORD: root
     # MYSQL_DATABASE: test
     ports:
-      - "6119:3306"
+      - "8321:3306"
     volumes:
       - ../data/mysql483d1/:/var/lib/mysql/ # folder for mysql's internal data files.
       - .:/root # folder for scripts, etc.
@@ -48,7 +48,7 @@ services:
       driver: "json-file"
       options:
         max-size: "100k"
-        max-file: "99"
+        max-file: "2"
 
 volumes:
   etc_apache2:
