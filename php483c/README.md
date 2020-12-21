@@ -17,7 +17,9 @@ dts=$(date +"%Y-%m-%d_%H.%M.%S"); seq 1 45 | xargs -I{} date ; \
 
 22.
 
+
 https://docs.directus.io/getting-started/installation.html#setup
+https://github.com/directus/v8-archive/blob/master/docker/images/apache/Dockerfile
 
 
 sudo chown -R  $USER:www-data ../data/php483d1
